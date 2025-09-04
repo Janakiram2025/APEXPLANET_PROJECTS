@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #25dcfc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;  /*  Keeps it centered */
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .container h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #444;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #2575fc;
+      outline: none;
+      box-shadow: 0 0 5px rgba(37,117,252,0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2575fc;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #6a11cb;
+    }
+
+    .success-message {
+      margin-top: 15px;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+      display: none;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      .container {
+        max-width: 90%;
+        padding: 20px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+
+      .container h2 {
+        font-size: 20px;
+      }
+
+      input, textarea {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" placeholder="Enter your first name">
+      <div class="error" id="firstNameError">First name is required</div>
+
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" placeholder="Enter your last name">
+      <div class="error" id="lastNameError">Last name is required</div>
+
+      <label for="mobile">Mobile Number</label>
+      <input type="text" id="mobile" placeholder="Enter your mobile number">
+      <div class="error" id="mobileError">Enter a valid 10-digit mobile number</div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email">
+      <div class="error" id="emailError">Enter a valid email address</div>
+
+      <label for="message">Message</label>
+      <textarea id="message" rows="4" placeholder="Type your message"></textarea>
+      <div class="error" id="messageError">Message cannot be empty</div>
+
+      <button type="submit">Submit</button>
+      <div class="success-message" id="successMessage">Form submitted successfully!</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("contactForm");
+    const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
+    const mobile = document.getElementById("mobile");
+    const email = document.getElementById("email");
+    const message = document.getElementById("message");
+
+    const firstNameError = document.getElementById("firstNameError");
+    const lastNameError = document.getElementById("lastNameError");
+    const mobileError = document.getElementById("mobileError");
+    const emailError = document.getElementById("emailError");
+    const messageError = document.getElementById("messageError");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let isValid = true;
+
+      if (firstName.value.trim() === "") {
+        firstNameError.style.display = "block";
+        isValid = false;
+      } else {
+        firstNameError.style.display = "none";
+      }
+
+      if (lastName.value.trim() === "") {
+        lastNameError.style.display = "block";
+        isValid = false;
+      } else {
+        lastNameError.style.display = "none";
+      }
+
+      const mobilePattern = /^[0-9]{10}$/;
+      if (!mobilePattern.test(mobile.value.trim())) {
+        mobileError.style.display = "block";
+        isValid = false;
+      } else {
+        mobileError.style.display = "none";
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email.value.trim())) {
+        emailError.style.display = "block";
+        isValid = false;
+      } else {
+        emailError.style.display = "none";
+      }
+
+      if (message.value.trim() === "") {
+        messageError.style.display = "block";
+        isValid = false;
+      } else {
+        messageError.style.display = "none";
+      }
+
+      if (isValid) {
+        successMessage.style.display = "block";
+        form.reset();
+      } else {
+        successMessage.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
